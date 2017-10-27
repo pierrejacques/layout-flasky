@@ -1,4 +1,5 @@
-from flask import Flask, request
+# -*- coding: utf-8 -*-
+from flask import Flask, request, render_template
 from flask.ext import restful
 
 import sys
@@ -15,6 +16,10 @@ def url2score(url):
     print('>>> Working on %s' % url)
     file_name = capture(url)
     return img2score(file_name)
+
+class Index(restful.Resource):
+    def get(self):
+        return render_template('index.html')
 
 class Score(restful.Resource):
     def post(self):
@@ -34,6 +39,7 @@ class Image(restful.Resource):
         request.files['file'].save(file_name) # save image to local
         return img2score(file_name)
 
+api.add_resource(Index, '/')
 api.add_resource(Score, '/api/score')
 api.add_resource(Image, '/api/image')
 
