@@ -39,9 +39,13 @@ class Image(restful.Resource):
         request.files['file'].save(file_name) # save image to local
         return img2score(file_name)
 
-api.add_resource(Index, '/')
 api.add_resource(Score, '/api/score')
 api.add_resource(Image, '/api/image')
+
+# router
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
